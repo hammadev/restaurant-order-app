@@ -22,6 +22,30 @@ export default function Home() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  function handleScroll() {
+    const currentScrollPosition =
+      window.scrollY || document.documentElement.scrollTop;
+    const CartContainerPostition = document.querySelector(".main-product-container").offsetTop;
+    const CartContainerElement = document.querySelector(".CartContainer");
+    const CartContainerWidth = CartContainerElement.offsetWidth;
+    console.log(CartContainerWidth);
+
+    CartContainerElement.style.width = CartContainerWidth + "px";
+    
+    if (CartContainerPostition <= currentScrollPosition) {
+      CartContainerElement.classList.add("cart-sticky");
+    } else {
+      CartContainerElement.classList.remove("cart-sticky");
+    }
+  }
+
   if (loading) {
     return (
       <div
@@ -45,7 +69,10 @@ export default function Home() {
       </div>
       <Menu category={data} />
 
-      <div style={{ width: "100%", overflow: "hidden", position: "relative" }}>
+      <div
+        className="main-product-container"
+        style={{ width: "100%", overflow: "hidden", position: "relative" }}
+      >
         <Row gap={1} wrap="Wrap" className="default-row">
           <Col span={9}>
             {data.map((item, i) => (

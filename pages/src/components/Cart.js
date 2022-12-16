@@ -29,7 +29,7 @@ export default function Cart() {
     return (
         <div className='CartContainer'>
             <div className='cartHeader'>
-                <Text h3 style={{ textAlign: 'center', marginTop: 10 }}>Cart</Text>
+                <Text h3 style={{ textAlign: 'center', }}>My Cart</Text>
             </div>
             <div className='CartContainerInner'>
                 {
