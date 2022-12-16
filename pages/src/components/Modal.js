@@ -19,15 +19,20 @@ export default function CartModal() {
     setTotalPrice(selectedItem.price);
   },[]);
 
+  useEffect(() => {
+    clearCartHistory();
+  }, [isShowModal]);
+
   function clearCartHistory(){
     setTotalPrice();
     setSelectedAddon([]);
     setSelectedVariant([]);
+    setQty(1);
   }
 
   function getTotal(){
     let GrandTotal = TotalPrice ? TotalPrice : selectedItem.price; 
-    GrandTotal = GrandTotal * qty;
+    GrandTotal = GrandTotal;
     return GrandTotal;
   }
 
@@ -62,12 +67,12 @@ export default function CartModal() {
   const OnPressAddToCartBtn = () => {
 
     let item = {
-      product : selectedItem,
-      selected_addon:SelectedAddon,
-      selected_variations:SelectedVariant,
-      total_price: TotalPrice,
+      product: selectedItem,
+      selected_addon: SelectedAddon,
+      selected_variations: SelectedVariant,
+      total_price: TotalPrice ? TotalPrice * qty : selectedItem.price * qty,
       qty,
-    }
+    };
 
     // setCartItems(item);
     CartItems.push(item);
@@ -75,7 +80,7 @@ export default function CartModal() {
     
     setIsShowModal(false);
     
-    clearCartHistory();
+    // clearCartHistory();
     // console.log(item);
 
     confetti({
@@ -97,9 +102,12 @@ export default function CartModal() {
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
       open={isShowModal}
-      onClose={() => {setIsShowModal(false);clearCartHistory()}}
+      onClose={() => {
+        setIsShowModal(false);
+        // clearCartHistory();
+      }}
     >
-      <Modal.Header css={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Modal.Header css={{ display: "flex", justifyContent: "space-between" }}>
         <Text h3 id="modal-title" size={22}>
           {selectedItem.name}
         </Text>
@@ -113,97 +121,97 @@ export default function CartModal() {
             <Image
               src={ASSET_BASE_URL + selectedItem.image}
               objectFit="contain"
-              width={'100%'}
+              width={"100%"}
               height={100}
               showSkeleton={true}
               alt={selectedItem.name}
             />
           </Col>
           <Col span={6}>
-            <Text id="modal-description">
-              {selectedItem.description}
-            </Text>
-
+            <Text id="modal-description">{selectedItem.description}</Text>
           </Col>
         </Row>
 
-        {
-          selectedItem.variations ?
-            selectedItem.variations.map((item, i) => {
+        {selectedItem.variations
+          ? selectedItem.variations.map((item, i) => {
               return (
                 <>
                   <Text h3>{item.name}</Text>
-                  {
-                    item.values ? (
-                      <Radio.Group css={{ width: '100%' }}
-                      onChange={() => ChooseVariant(item)}>
-                        {
-                          item.values.map((itemI, i) => (
-                            <Radio size={'xs'} value={itemI.label} css={{ display: 'flex', justifyContent: 'space-between', width: '100%', position: 'relative', }}>
-                              <Text style={{ fontSize: 16 }}>{itemI.label}</Text>
-                              {
-                                itemI.optionPrice > 0 ?
-                                  <Text style={{ position: 'absolute', right: 0, fontSize: 16 }}>${itemI.optionPrice}</Text>
-                                  :
-                                  null
-                              }
-                            </Radio>
-
-                          ))
-                        }
-                      </Radio.Group>
-                    )
-                      :
-                      null
-                  }
+                  {item.values ? (
+                    <Radio.Group
+                      css={{ width: "100%" }}
+                      onChange={() => ChooseVariant(item)}
+                    >
+                      {item.values.map((itemI, i) => (
+                        <Radio
+                          size={"xs"}
+                          value={itemI.label}
+                          css={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            width: "100%",
+                            position: "relative",
+                          }}
+                        >
+                          <Text style={{ fontSize: 16 }}>{itemI.label}</Text>
+                          {itemI.optionPrice > 0 ? (
+                            <Text
+                              style={{
+                                position: "absolute",
+                                right: 0,
+                                fontSize: 16,
+                              }}
+                            >
+                              ${itemI.optionPrice}
+                            </Text>
+                          ) : null}
+                        </Radio>
+                      ))}
+                    </Radio.Group>
+                  ) : null}
                 </>
-
               );
-
             })
-            :
-            null
-        }
+          : null}
 
-        {
-          (selectedItem.add_ons || []).length > 0 ?
-            <Text h3>Addon</Text>
-            :
-            null
-        }
+        {(selectedItem.add_ons || []).length > 0 ? <Text h3>Addon</Text> : null}
 
-        {
-          selectedItem.add_ons ?
-            (
-              selectedItem.add_ons.map((item, i) => (
-                <Checkbox  onChange={() => AddAddon(item)} color="primary" size='sm' css={{ width: '100%' }}>
-                  {item.name}
-                  <Text style={{ fontSize: 16 }}>${item.price}</Text>
-                </Checkbox>
-                // <Text h3>{item.name}</Text>
-              ))
-            )
-            :
-            null
-        }
-
+        {selectedItem.add_ons
+          ? selectedItem.add_ons.map((item, i) => (
+              <Checkbox
+                onChange={() => AddAddon(item)}
+                color="primary"
+                size="sm"
+                css={{ width: "100%" }}
+              >
+                {item.name}
+                <Text style={{ fontSize: 16 }}>${item.price}</Text>
+              </Checkbox>
+              // <Text h3>{item.name}</Text>
+            ))
+          : null}
 
         <TextArea />
       </Modal.Body>
-      <Modal.Footer css={{display:'flex',justifyContent:'space-between'}}>
+      <Modal.Footer css={{ display: "flex", justifyContent: "space-between" }}>
         <div>
           <Text h6 size={16}>
-              Total Price: ${TotalPrice ? TotalPrice : selectedItem.price}
+            Total Price: $
+            {TotalPrice ? TotalPrice * qty : selectedItem.price * qty}
           </Text>
         </div>
 
-        <div style={{display:'flex',alignItems:'center'}}>
+        <div style={{ display: "flex", alignItems: "center" }}>
           <Button.Group>
-            <Button onClick={() => {
-              qty > 1 ? setQty(qty-1) : null;
-            }}>-</Button>
+            <Button
+              onClick={() => {
+                qty > 1 ? setQty(qty - 1) : null;
+              }}
+            >
+              -
+            </Button>
             <Button disabled>{qty}</Button>
-            <Button onClick={() => setQty(qty+1)}>+</Button>
+            <Button onClick={() => setQty(qty + 1)}>+</Button>
           </Button.Group>
 
           <Button auto onClick={OnPressAddToCartBtn}>
