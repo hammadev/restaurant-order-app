@@ -6,7 +6,7 @@ export default function Menu(props) {
         <div className='MenuContainer'>
             {
             props.category.map((item,i) => (
-                <Link href={`#cat_sec_${item.id}`} >
+                <Link key={i} href={`#cat_sec_${item.id}`} >
                     <Text h4>{item.name}</Text>
                 </Link>
             ))

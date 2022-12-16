@@ -1,4 +1,4 @@
-const BASE_URL = 'http://10.175.175.58:8080/api/v1/';
-const ASSET_BASE_URL = 'http://10.175.175.58:8080/storage/product/';
+const BASE_URL = 'https://demoappprojects.com/epic-burger/api/v1/';
+const ASSET_BASE_URL = 'https://demoappprojects.com/epic-burger/storage/product/';
 
 export {BASE_URL,ASSET_BASE_URL};

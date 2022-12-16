@@ -43,7 +43,7 @@ const CartItem = (props) => {
                             </Text>
                             {
                                 props.item.selected_addon.map((item, i) => (
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }} key={i}>
                                         <Text>
                                             {item.name}
                                         </Text>
@@ -66,7 +66,7 @@ const CartItem = (props) => {
                             </Text>
                             {
                                 props.item.selected_variations.map((item, i) => (
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+                                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
                                         <Text>
                                             {item.name}
                                         </Text>

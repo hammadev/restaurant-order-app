@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "./src/components/navbar";
 import InputField from "./src/components/Input";
 import { Container, Row, Col, Button, Text, Card } from "@nextui-org/react";
@@ -12,10 +12,17 @@ import axios from "axios";
 const Checkout = () => {
   const { CartItems } = useContext(GlobalStateContext);
   console.log(CartItems);
-  let totalPrice = 0;
+  const [totalPrice,setTotalPrice] = useState();
+  useEffect(() => {
+    let totalPrice = 0;
+    CartItems.map((item, i) => {
+      totalPrice += item.total_price;
+    })
+    setTotalPrice(totalPrice);
+  }, []);
 
-  const [deliveryType, SetTypeDeliveryType] = useState();
-  const [paymentType, SetPaymentType] = useState();
+  const [deliveryType, SetDeliveryType] = useState('pickup');
+  const [paymentType, SetPaymentType] = useState('online');
   const [loading, setLoading] = useState(false);
 
   const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
@@ -24,11 +31,11 @@ const Checkout = () => {
   const createCheckOutSession = async () => {
     setLoading(true);
     const stripe = await stripePromise;
-    const checkoutSession = await axios.post(`${BASE_URL}pay-stripe`, 
-    {
-      order_id:1,
-      order_amount:100,
-    }
+    const checkoutSession = await axios.post(`${BASE_URL}pay-stripe`,
+      {
+        order_id: 1,
+        order_amount: totalPrice,
+      }
     );
     console.log(checkoutSession);
     const result = await stripe.redirectToCheckout({
@@ -44,23 +51,29 @@ const Checkout = () => {
     <main>
       <Container>
         {/* <Header/> */}
-        <Card css={{ marginTop: 30, overflow: "hidden", padding: 20 }}>
+        <Card css={{ marginTop: 30, marginBottom: 30, overflow: "hidden", padding: 20 }}>
           <Card.Body>
             <Row wrap="wrap" gap={1} className="default-row">
               <Col span={8}>
                 <Text b>Delivery Type</Text>
                 <div style={{ display: "flex", marginTop: 5 }}>
-                  <Button color="primary" auto>
+
+                
+                  <Button color="primary" bordered={deliveryType == 'delivery' ? false : true} auto onPress={() => SetDeliveryType('delivery')}>
                     Home Delivery
                   </Button>
+
                   <Button
-                    bordered
                     color="primary"
+                    bordered={deliveryType == 'pickup' ? false : true}
                     css={{ marginLeft: 10 }}
                     auto
+                    onPress={() => SetDeliveryType('pickup')}
                   >
                     Take Away
                   </Button>
+
+
                 </div>
 
                 <Row wrap="Wrap" gap={1} className="default-row">
@@ -82,15 +95,20 @@ const Checkout = () => {
                   <Text b>Choose Payment Type</Text>
                 </div>
                 <div style={{ display: "flex", marginTop: 5 }}>
-                  <Button color="primary" auto>
+                  <Button 
+                    color="primary"
+                    auto
+                    bordered={paymentType == 'COD' ? false : true}
+                    onPress={() => SetPaymentType('COD')}
+                  >
                     Cash On Delivery
                   </Button>
                   <Button
-                    bordered
+                    bordered={paymentType == 'online' ? false : true}
                     color="primary"
                     css={{ marginLeft: 10 }}
                     auto
-                    onPress={createCheckOutSession}
+                    onPress={() => SetPaymentType('online')}
                   >
                     Online Payment
                   </Button>
@@ -98,7 +116,7 @@ const Checkout = () => {
               </Col>
               <Col span={4}>
                 <div className="checkout-side-area">
-                  <Cart />
+                  <Cart payment={true}  paymentFunc={createCheckOutSession} />
                   {/* {
                     CartItems.map((item, i) => {
                       console.log("totalPrice", item.total_price);

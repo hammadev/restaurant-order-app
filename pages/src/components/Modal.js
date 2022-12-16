@@ -135,7 +135,7 @@ export default function CartModal() {
         {selectedItem.variations
           ? selectedItem.variations.map((item, i) => {
               return (
-                <>
+                <div key={i}>
                   <Text h3>{item.name}</Text>
                   {item.values ? (
                     <Radio.Group
@@ -152,6 +152,7 @@ export default function CartModal() {
                             width: "100%",
                             position: "relative",
                           }}
+                          key={i}
                         >
                           <Text style={{ fontSize: 16 }}>{itemI.label}</Text>
                           {itemI.optionPrice > 0 ? (
@@ -169,7 +170,7 @@ export default function CartModal() {
                       ))}
                     </Radio.Group>
                   ) : null}
-                </>
+                </div>
               );
             })
           : null}
@@ -183,6 +184,7 @@ export default function CartModal() {
                 color="primary"
                 size="sm"
                 css={{ width: "100%" }}
+                key={i}
               >
                 {item.name}
                 <Text style={{ fontSize: 16 }}>${item.price}</Text>

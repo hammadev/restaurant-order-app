@@ -5,7 +5,7 @@ import CartItem from './CartItem';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
 
-export default function Cart() {
+export default function Cart({ payment, paymentFunc }) {
 
     const router = useRouter()
     const { CartItems } = useContext(GlobalStateContext);
@@ -20,6 +20,7 @@ export default function Cart() {
                     showSkeleton={true}
                     width={'90%'}
                     height={120}
+                    alt="Empty Cart"
                 />
                 <Text h3 style={{ textAlign: 'center', marginTop: 10 }}>Your cart is empty!</Text>
             </div>
@@ -36,7 +37,7 @@ export default function Cart() {
                     CartItems.map((item, i) => {
                         // console.log("totalPrice",item.total_price);
                         totalPrice += item.total_price;
-                        return(
+                        return (
                             <div key={i} style={{ marginBottom: 10 }}>
                                 <CartItem item={item} />
                             </div>
@@ -57,9 +58,17 @@ export default function Cart() {
                     <Text b>Grand Total</Text>
                     <Text b>${totalPrice + 19}</Text>
                 </div>
-                    <Button css={{width:'100%'}} onClick={() => router.push({pathname:'/checkout',query:CartItems})}>
+                {
+                    payment ? 
+                    <Button css={{ width: '100%' }} onClick={paymentFunc}>
+                        Continue to Payment
+                    </Button>
+                    :
+                    <Button css={{ width: '100%' }} onClick={() => router.push({ pathname: '/checkout', query: CartItems })}>
                         Proceed to checkout
                     </Button>
+
+                }
                 <Link href="/checkout">
                 </Link>
             </div>

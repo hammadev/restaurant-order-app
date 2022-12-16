@@ -14,6 +14,7 @@ export default function Home() {
 
   const fetchData = async () => {
     let data = await axios.get(`${BASE_URL}categories`);
+
     setData(data.data);
     setIsLoading(false);
   };
