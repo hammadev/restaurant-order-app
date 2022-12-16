@@ -2,8 +2,10 @@ html,
 body {
   padding: 0;
   margin: 0;
+  scroll-behavior: smooth;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    box-sizing: border-box;
 }
 
 a {
@@ -13,6 +15,70 @@ a {
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.Homebanner{
+  background-image: url('https://mykaleidoscope.ru/en/uploads/posts/2022-09/1663775796_16-mykaleidoscope-ru-p-burger-on-a-black-background-yeda-oboi-18.jpg');
+  height: 500px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.CartContainer{
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  height: 100vh;
+  width: 100%;
+  position: sticky;
+  top: 0;
+}
+
+.CartContainerInner{
+  width: 100%;
+  height: 70%;
+  padding: 20px 10px;
+  overflow-y: scroll;
+}
+
+.EmptyCartContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cartHeader{
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  background-color: '#fff';
+  padding: 10px;
+  z-index: 2;
+}
+
+.MenuContainer{
+  height: 50px;
+  width: 100%;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: #fff;
+}
+
+.cartSummary{
+  padding: 20px;
+}
+
+.nextui-modal .nextui-radio-container{
+  width: 100% !important;
+}
+
+.nextui-modal .nextui-checkbox-text{
+  width: 100% !important;
+  justify-content: space-between !important;
 }
 
 @media (prefers-color-scheme: dark) {
