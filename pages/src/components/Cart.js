@@ -34,7 +34,7 @@ export default function Cart() {
             <div className='CartContainerInner'>
                 {
                     CartItems.map((item, i) => {
-                        console.log("totalPrice",item.total_price);
+                        // console.log("totalPrice",item.total_price);
                         totalPrice += item.total_price;
                         return(
                             <div key={i} style={{ marginBottom: 10 }}>

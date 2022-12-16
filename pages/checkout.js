@@ -5,6 +5,9 @@ import { Container, Row, Col, Button, Text, Card } from "@nextui-org/react";
 import TextArea from "./src/components/TextArea";
 import { GlobalStateContext } from "./contexts/GlobalContext";
 import Cart from "./src/components/Cart";
+import { loadStripe } from '@stripe/stripe-js';
+import { BASE_URL } from "./api/config";
+import axios from "axios";
 
 const Checkout = () => {
   const { CartItems } = useContext(GlobalStateContext);
@@ -13,6 +16,29 @@ const Checkout = () => {
 
   const [deliveryType, SetTypeDeliveryType] = useState();
   const [paymentType, SetPaymentType] = useState();
+  const [loading, setLoading] = useState(false);
+
+  const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+  const stripePromise = loadStripe(publishableKey);
+
+  const createCheckOutSession = async () => {
+    setLoading(true);
+    const stripe = await stripePromise;
+    const checkoutSession = await axios.post(`${BASE_URL}pay-stripe`, 
+    {
+      order_id:1,
+      order_amount:100,
+    }
+    );
+    console.log(checkoutSession);
+    const result = await stripe.redirectToCheckout({
+      sessionId: checkoutSession.data.id,
+    });
+    if (result.error) {
+      alert(result.error.message);
+    }
+    setLoading(false);
+  };
 
   return (
     <main>
@@ -64,6 +90,7 @@ const Checkout = () => {
                     color="primary"
                     css={{ marginLeft: 10 }}
                     auto
+                    onPress={createCheckOutSession}
                   >
                     Online Payment
                   </Button>
