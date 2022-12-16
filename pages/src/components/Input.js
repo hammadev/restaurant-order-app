@@ -4,9 +4,9 @@ export default function InputField({placeHolder,value,setValue}) {
   return (
     <>
       <Input
-        clearable
-        underlined
-        labelPlaceholder="Name"
+        label={placeHolder}
+        placeholder={placeHolder}
+        css={{width:'100%',marginTop:10,marginBottom:10}}
       />
     </>
   );

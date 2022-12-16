@@ -1,12 +1,15 @@
 import React, { useContext, useEffect } from 'react'
+import { Image, Text, Button, } from "@nextui-org/react";
 import { GlobalStateContext } from '../../contexts/GlobalContext';
-import { Image, Text, Button } from "@nextui-org/react";
 import CartItem from './CartItem';
+import Link from 'next/link';
+import { useRouter } from 'next/router'
 
 export default function Cart() {
 
-    const { CartItems, setCartItems } = useContext(GlobalStateContext);
-    // console.log(CartItems);
+    const router = useRouter()
+    const { CartItems } = useContext(GlobalStateContext);
+
     let totalPrice = 0;
 
     if (CartItems.length == 0) {
@@ -54,9 +57,11 @@ export default function Cart() {
                     <Text b>Grand Total</Text>
                     <Text b>${totalPrice + 19}</Text>
                 </div>
-                <Button css={{width:'100%'}}>
-                    Proceed to checkout
-                </Button>
+                    <Button css={{width:'100%'}} onClick={() => router.push({pathname:'/checkout',query:CartItems})}>
+                        Proceed to checkout
+                    </Button>
+                <Link href="/checkout">
+                </Link>
             </div>
         </div>
     );
