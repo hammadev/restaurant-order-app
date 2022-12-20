@@ -1,7 +1,7 @@
 import { Text, Spacer } from "@nextui-org/react"
-import { Box } from "./Box.js"
+import Box from "./Box.js";
 
-export const Content = () => (
+const Content = () => (
   <Box css={{px: "$12", mt: "$8", "@xsMax": {px: "$10"}}}>
     <Text h2>Lorem ipsum dolor sit amet</Text>
     <Text size="$lg">
@@ -76,3 +76,5 @@ export const Content = () => (
     <Spacer y={1} />
   </Box>
 );
+
+export default Content;

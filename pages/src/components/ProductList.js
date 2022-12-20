@@ -3,7 +3,7 @@ import { Card, Grid, Row, Text, Loading, Image, Button } from "@nextui-org/react
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL, ASSET_BASE_URL } from "../../api/config";
-import { GlobalStateContext } from "../../contexts/GlobalContext";
+import GlobalStateContext from '../../contexts/GlobalContext';
 
 export default function ProductList(props) {
 

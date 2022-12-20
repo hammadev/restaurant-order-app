@@ -1,4 +1,4 @@
-export const AcmeLogo = () => (
+const AcmeLogo = () => (
     <svg
       className=""
       fill="none"
@@ -16,4 +16,6 @@ export const AcmeLogo = () => (
       />
     </svg>
   );
+
+  export default AcmeLogo;
   

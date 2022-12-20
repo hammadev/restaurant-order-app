@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Modal, Button, Text, Image, Radio, Checkbox, Row, Col } from "@nextui-org/react";
-import { GlobalStateContext } from "../../contexts/GlobalContext";
+import GlobalStateContext from '../../contexts/GlobalContext';
 import { ASSET_BASE_URL } from '../../api/config';
 import confetti from 'canvas-confetti';
 import TextArea from './TextArea';

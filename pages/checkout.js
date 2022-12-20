@@ -3,7 +3,7 @@ import Header from "./src/components/navbar";
 import InputField from "./src/components/Input";
 import { Container, Row, Col, Button, Text, Card } from "@nextui-org/react";
 import TextArea from "./src/components/TextArea";
-import { GlobalStateContext } from "./contexts/GlobalContext";
+import GlobalStateContext from './contexts/GlobalContext';
 import Cart from "./src/components/Cart";
 import { loadStripe } from '@stripe/stripe-js';
 import { BASE_URL } from "./api/config";

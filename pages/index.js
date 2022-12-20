@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "./src/components/navbar";
 import ProductList from "./src/components/ProductList";
-import { Row, Text, Col, Loading } from "@nextui-org/react";
+import { Row, Text, Col, Loading, Button } from "@nextui-org/react";
 import Cart from "./src/components/Cart";
 import Menu from "./src/components/Menu";
 import axios from "axios";
@@ -11,15 +11,24 @@ import CartModal from "./src/components/Modal";
 export default function Home() {
   const [data, setData] = useState();
   const [loading, setIsLoading] = useState(true);
-
-  const fetchData = async () => {
-    let data = await axios.get(`${BASE_URL}categories`);
-
-    setData(data.data);
-    setIsLoading(false);
-  };
-
+  
   useEffect(() => {
+    const fetchData = async () => {
+  
+      const config = {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+        }
+      };  
+  
+      let data = await axios.get('https://demoappprojects.com/epic-burger/api/v1/categories',config);
+  
+      // console.log(data);
+      setData(data.data);
+      setIsLoading(false);
+    };
+    
     fetchData();
   }, []);
 
@@ -36,7 +45,7 @@ export default function Home() {
     const CartContainerPostition = document.querySelector(".main-product-container").offsetTop;
     const CartContainerElement = document.querySelector(".CartContainer");
     const CartContainerWidth = CartContainerElement.offsetWidth;
-    console.log(CartContainerWidth);
+    // console.log(CartContainerWidth);
 
     CartContainerElement.style.width = CartContainerWidth + "px";
     

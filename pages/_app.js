@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import React, { useEffect, useState } from "react";
-import { GlobalStateContext } from './contexts/GlobalContext';
+import GlobalStateContext from './contexts/GlobalContext';
 
 function MyApp({ Component, pageProps }) {
 
@@ -9,9 +9,9 @@ function MyApp({ Component, pageProps }) {
   const [isShowModal, setIsShowModal] = useState(false);
 
   return (
-    <GlobalStateContext.Provider value={{ selectedItem, setSelectedItem, isShowModal, setIsShowModal, CartItems, setCartItems }}>
-      <Component {...pageProps} />
-    </GlobalStateContext.Provider>
+      <GlobalStateContext.Provider value={{ selectedItem, setSelectedItem, isShowModal, setIsShowModal, CartItems, setCartItems }}>
+        <Component {...pageProps} />
+      </GlobalStateContext.Provider>
   ); 
 }
 

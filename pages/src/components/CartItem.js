@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Card, Grid, Image, Text, Link } from "@nextui-org/react";
 import { ASSET_BASE_URL } from "../../api/config";
-import { GlobalStateContext } from "../../contexts/GlobalContext";
+import GlobalStateContext from '../../contexts/GlobalContext';
 
 const CartItem = (props) => {
     let item = props.item;

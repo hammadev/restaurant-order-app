@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, Button, Link, Text, Card, Radio } from "@nextui-org/react";
-import { Layout } from "./Layout.js";
-import { AcmeLogo } from "./AcmeLogo.js";
+import Layout from "./Layout.js";
+import AcmeLogo from "./AcmeLogo.js";
 
 function Header() {
   const [variant, setVariant] = React.useState("floating");

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { Image, Text, Button, } from "@nextui-org/react";
-import { GlobalStateContext } from '../../contexts/GlobalContext';
+import GlobalStateContext from '../../contexts/GlobalContext';
 import CartItem from './CartItem';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
